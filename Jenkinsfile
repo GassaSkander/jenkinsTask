@@ -1,8 +1,6 @@
 pipeline {
     agent any
     environment {
-        // Définissez ici le mot de passe de votre serveur SonarQube comme variable d'environnement sécurisée
-        SONARQUBE_PASSWORD = credentials('password1P@')
     }
     stages {
         stage('Dev') {
@@ -34,7 +32,7 @@ pipeline {
         stage('SonarQube Analysis') {
             environment {
                 SONARQUBE_USERNAME = credentials('admin')
-                SONARQUBE_PASSWORD = credentials('admin@')
+                SONARQUBE_PASSWORD = credentials('admin')
             }
             steps {
                 script {
