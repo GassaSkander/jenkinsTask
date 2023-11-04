@@ -29,15 +29,9 @@ pipeline {
             }
         }
         stage('SonarQube Analysis') {
-            environment {
-                SONARQUBE_USERNAME = credentials('admin')
-                SONARQUBE_PASSWORD = credentials('admin')
-            }
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: 'sonarqube-credentials', usernameVariable: 'SONARQUBE_USERNAME', passwordVariable: 'SONARQUBE_PASSWORD')]) {
-                        sh "mvn sonar:sonar -Dsonar.login=${env.SONARQUBE_USERNAME} -Dsonar.password=${env.SONARQUBE_PASSWORD}"
-                    }
+                    sh "mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=admin"
                 }
             }
         }
