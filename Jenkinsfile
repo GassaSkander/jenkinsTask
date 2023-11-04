@@ -34,7 +34,7 @@ pipeline {
         stage('SonarQube Analysis') {
             environment {
                 SONARQUBE_USERNAME = credentials('admin')
-                SONARQUBE_PASSWORD = credentials('password1P@')
+                SONARQUBE_PASSWORD = credentials('admin@')
             }
             steps {
                 script {
