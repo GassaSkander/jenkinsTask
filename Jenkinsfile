@@ -32,12 +32,14 @@ pipeline {
             }
         }
         stage('SonarQube Analysis') {
+            environment {
+                SONARQUBE_USERNAME = credentials('admin')
+                SONARQUBE_PASSWORD = credentials('password1P@')
+            }
             steps {
                 script {
-                    def scannerHome = tool name: 'SonarQube', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
-                    withSonarQubeEnv('SonarQube') {
-                        // Utilisez la variable d'environnement sécurisée pour le mot de passe
-                        sh "mvn sonar:sonar -Dsonar.login=${env.SONARQUBE_PASSWORD}"
+                    withCredentials([usernamePassword(credentialsId: 'sonarqube-credentials', usernameVariable: 'SONARQUBE_USERNAME', passwordVariable: 'SONARQUBE_PASSWORD')]) {
+                        sh "mvn sonar:sonar -Dsonar.login=${env.SONARQUBE_USERNAME} -Dsonar.password=${env.SONARQUBE_PASSWORD}"
                     }
                 }
             }
